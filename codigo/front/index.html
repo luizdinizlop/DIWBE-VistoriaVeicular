@@ -8,16 +8,17 @@
 </head>
 <body>
 
-   <header class="topo">
-    <a class="logo" onclick="mostrarTela('home')">
-        <img src="img/logo.png" alt="Vistoria Informatizada">
-    </a>
-    <div class="botoes">
-    </div>
+    <header class="topo">
+        <a class="logo" onclick="mostrarTela('home')">
+            <img src="img/logo.png" alt="Vistoria Informatizada">
+        </a>
+        <div class="botoes">
+            <button class="btn" id="btnCadastrar">Cadastre-se</button>
+            <button class="btn" id="btnEntrar">Entrar</button>
+        </div>
     </header>
 
 
-    <!--  TELA 1: Inicio   -->
     <main id="home" class="tela ativa">
 
         <h2 class="titulo-secao" style="margin-top:60px">ÁREAS DE USUÁRIO</h2>
@@ -36,16 +37,15 @@
     </main>
 
 
-    <!--  TELA 2: OPERADOR  -->
     <main id="operador" class="tela">
 
         <h1 class="titulo-pagina">VEICULAR</h1>
 
         <div class="barra">
-            <input class="busca" type="text" placeholder="Buscar por placa ou modelo">
+            <input class="busca" id="inputBusca" type="text" placeholder="Buscar por placa ou modelo">
             <div class="botoes">
-                <button class="btn btn-incluir">+ Incluir</button>
-                <button class="btn btn-filtrar">Filtrar</button>
+                <button class="btn btn-incluir" id="btnIncluir">+ Incluir</button>
+                <button class="btn btn-filtrar" id="btnFiltrarOperador">Filtrar</button>
             </div>
         </div>
 
@@ -53,159 +53,97 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th><th>PLACA</th><th>MODELO</th><th>SITUAÇÃO</th>
+                        <th>ID</th>
+                        <th>PLACA</th>
+                        <th>MODELO</th>
+                        <th>SITUAÇÃO</th>
                         <th class="col-acao"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbodyOperador">
                     <tr>
-                        <td>8</td><td>HKN-9E25</td><td>FIAT/MAREA TURBO</td>
-                        <td><span class="selo reprovado">Reprovado</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>7</td><td>AOB-1A01</td><td>FORD/KA FLEX</td>
-                        <td><span class="selo pendente">Pendente</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>6</td><td>SNK-4S12</td><td>HYUNDAI/HB20S</td>
-                        <td><span class="selo ressalvas">Com ressalvas</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td><td>GTA-1911</td><td>CHEVROLET/ONIX JOYE</td>
-                        <td><span class="selo aprovado">Aprovado</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td><td>RVT-1J56</td><td>RENAULT/KWID ZEN 1.0</td>
-                        <td><span class="selo reprovado">Reprovado</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td><td>RDM-0H00</td><td>FIAT/UNO MILLE 1.0</td>
-                        <td><span class="selo aprovado">Aprovado</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td><td>RDN-1J99</td><td>VOLKSWAGEN/GOL 1.0 16V</td>
-                        <td><span class="selo cancelado">Cancelado</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
-                    </tr>
-                    <tr>
-                        <td>1</td><td>CER-9E99</td><td>LAMBORGHINI/URUS</td>
-                        <td><span class="selo aprovado">Aprovado</span></td>
-                        <td class="col-acao"><button class="btn btn-opcoes" onclick="mostrarTela('veicular')">Opções</button></td>
+                        <td colspan="5">Nenhum veículo cadastrado</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="pagination" id="paginationOperador"></div>
+
     </main>
 
 
-    <!-- TELA 3: AVALIADOR  -->
     <main id="avaliador" class="tela">
 
         <h1 class="titulo-pagina">VEICULAR</h1>
 
         <div class="barra" style="justify-content:flex-end">
-            <button class="btn btn-filtrar">Filtrar</button>
+            <button class="btn btn-filtrar" id="btnFiltrarAvaliador">Filtrar</button>
         </div>
 
         <div class="tabela-area">
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th><th>PLACA</th><th>MODELO</th>
-                        <th>DATA DO AGENDAMENTO</th><th>SITUAÇÃO</th>
+                        <th>ID</th>
+                        <th>PLACA</th>
+                        <th>MODELO</th>
+                        <th>DATA DO AGENDAMENTO</th>
+                        <th>SITUAÇÃO</th>
                         <th class="col-acao"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbodyAvaliador">
                     <tr>
-                        <td>8</td><td>HKN-9E25</td><td>FIAT/MAREA TURBO</td><td>24/10/2026</td>
-                        <td><span class="selo perdida">Perdida</span></td>
-                        <td class="col-acao"><button class="btn btn-visitoriar" onclick="mostrarTela('veicular')">Visitoriar</button></td>
-                    </tr>
-                    <tr>
-                        <td>7</td><td>AOB-1A01</td><td>FORD/KA FLEX</td><td>01/10/2026</td>
-                        <td><span class="selo concluida">Concluída</span></td>
-                        <td class="col-acao"><button class="btn btn-visitoriar" onclick="mostrarTela('veicular')">Visitoriar</button></td>
-                    </tr>
-                    <tr>
-                        <td>6</td><td>SNK-4S12</td><td>HYUNDAI/HB20S</td><td>01/10/2026</td>
-                        <td><span class="selo pendente">Pendente</span></td>
-                        <td class="col-acao"><button class="btn btn-visitoriar" onclick="mostrarTela('veicular')">Visitoriar</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td><td>GTA-1911</td><td>CHEVROLET/ONIX JOYE</td><td>03/10/2026</td>
-                        <td><span class="selo embreve">Em breve</span></td>
-                        <td class="col-acao"><button class="btn btn-visitoriar" onclick="mostrarTela('veicular')">Visitoriar</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td><td>RVT-1J56</td><td>RENAULT/KWID ZEN 1.0</td><td>03/10/2026</td>
-                        <td><span class="selo embreve">Em breve</span></td>
-                        <td class="col-acao"><button class="btn btn-visitoriar" onclick="mostrarTela('veicular')">Visitoriar</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td><td>RDM-0H00</td><td>FIAT/UNO MILLE 1.0</td><td>04/10/2026</td>
-                        <td><span class="selo embreve">Em breve</span></td>
-                        <td class="col-acao"><button class="btn btn-visitoriar" onclick="mostrarTela('veicular')">Visitoriar</button></td>
+                        <td colspan="6">Nenhuma vistoria agendada</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="pagination" id="paginationAvaliador"></div>
+
     </main>
 
 
-    <!--TELA 4: DETALHE DO VEÍCULO-->
     <main id="veicular" class="tela">
 
         <h1 class="titulo-pagina">VEICULAR</h1>
 
         <div class="placa-modelo">
-            <span>AON-9A06</span>
-            <span>FIAT/TORO FREEDOM 2.0</span>
+            <span id="detPlaca">---</span>
+            <span id="detModelo">---</span>
         </div>
 
         <h2 class="titulo-secao">Fotos do veículo vistoriado:</h2>
 
         <section class="fotos">
-            <div class="foto">Frente</div>
-            <div class="foto">Traseira</div>
-            <div class="foto">Lat. Direita</div>
-            <div class="foto">Lat. Esquerda</div>
-            <div class="foto">Motor</div>
-            <div class="foto">Chassi</div>
-            <div class="foto">Triângulo</div>
-            <div class="foto">Macaco Hidráulico</div>
+            <div class="foto" id="fotoFrente">Frente</div>
+            <div class="foto" id="fotoTraseira">Traseira</div>
+            <div class="foto" id="fotoLatDireita">Lat. Direita</div>
+            <div class="foto" id="fotoLatEsquerda">Lat. Esquerda</div>
+            <div class="foto" id="fotoMotor">Motor</div>
+            <div class="foto" id="fotoChassi">Chassi</div>
+            <div class="foto" id="fotoTriangulo">Triângulo</div>
+            <div class="foto" id="fotoMacaco">Macaco Hidráulico</div>
         </section>
 
         <h2 class="titulo-secao">Características apontadas:</h2>
 
-        <ul class="caracteristicas">
-            <li>Arranhão na lat. direita</li>
-            <li>Pneu dianteiro desgastado</li>
-            <li>Farol esquerdo trincado</li>
-        </ul>
+        <ul class="caracteristicas" id="detCaracteristicas"></ul>
 
     </main>
 
 
     <script>
-        function mostrarTela(id) {
-            document.querySelectorAll('.tela').forEach(function (tela) {
-                tela.classList.remove('ativa');
-            });
-           
-            document.getElementById(id).classList.add('ativa');
-            
-            window.scrollTo(0, 0);
-        }
-    </script>
+    function mostrarTela(id) {
+        document.querySelectorAll('.tela').forEach(function (tela) {
+            tela.classList.remove('ativa');
+        });
+        document.getElementById(id).classList.add('ativa');
+        window.scrollTo(0, 0);
+    }
+</script>
 
 </body>
 </html>
