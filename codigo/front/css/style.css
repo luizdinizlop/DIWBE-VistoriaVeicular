@@ -221,3 +221,8 @@ tbody tr:nth-child(odd) { background: #d9d9d9; }   /* linhas zebradas */
 .tela { display: none; }          /* todas escondidas */
 .tela.ativa { display: block; }   /* só a que tem a classe "ativa" aparece */
 a.logo, .area-card, .btn { cursor: pointer; }
+
+/* ===== 12. MENSAGEM DE AVISO ===== */
+#mensagem { margin: 0 60px 20px; }
+.sucesso { background: #d4edda; color: #155724; padding: 15px; }
+.erro    { background: #f8d7da; color: #721c24; padding: 15px; }
