@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de usuário - Vistoria Veicular</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-auth">
+
+    <div class="cartao-auth">
+        <a href="index.html" class="logo"><img src="img/logo.png" alt="Vistoria Informatizada"></a>
+        <h2>Cadastro de usuário</h2>
+
+        <!-- Escolha do tipo de usuário -->
+        <div class="seletor-tipo">
+            <button type="button" id="btnAvaliador" onclick="escolherTipo('avaliador')">Avaliador</button>
+            <button type="button" id="btnOperador" onclick="escolherTipo('operador')">Operador</button>
+        </div>
+
+        <div class="mensagem-erro" id="erro"></div>
+
+        <form id="formCadastro">
+            <div class="campo">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" required>
+            </div>
+            <div class="campo">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="campo">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" minlength="6" required>
+            </div>
+            <div class="campo">
+                <label for="confirmarSenha">Confirmar senha:</label>
+                <input type="password" id="confirmarSenha" minlength="6" required>
+            </div>
+            <button type="submit" class="btn btn-sucesso btn-bloco">Cadastre-se</button>
+        </form>
+
+        <p class="rodape-auth">Já tem conta? <a href="login.html">Entrar</a></p>
+    </div>
+
+    <div class="aviso" id="aviso"></div>
+
+    <script src="js/comum.js"></script>
+    <script src="js/cadastro.js"></script>
+</body>
+</html>

@@ -1,144 +1,91 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vistoria Informatizada</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vistoria Veicular</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+    <!-- Cabeçalho -->
     <header class="topo">
-        <a class="logo" onclick="mostrarTela('home')">
-            <img src="img/logo.png" alt="Vistoria Informatizada">
-        </a>
-        <div class="botoes">
-            <button class="btn" id="btnCadastrar">Cadastre-se</button>
-            <button class="btn" id="btnEntrar">Entrar</button>
+        <div class="container">
+            <a href="index.html" class="logo"><img src="img/logo.png" alt="Vistoria Informatizada"></a>
+            <div class="topo-acoes" id="topoAcoes">
+                <a href="cadastro.html" class="btn btn-contorno">Cadastre-se</a>
+                <a href="login.html" class="btn btn-escuro">Entrar</a>
+            </div>
         </div>
     </header>
 
-
-    <div id="mensagem"></div>
-
-
-    <main id="home" class="tela ativa">
-
-        <h2 class="titulo-secao" style="margin-top:60px">ÁREAS DE USUÁRIO</h2>
-
-        <section class="areas">
-            <a class="area-card" onclick="mostrarTela('operador')">ÁREA DO OPERADOR</a>
-            <a class="area-card" onclick="mostrarTela('avaliador')">ÁREA DO AVALIADOR</a>
+    <main>
+        <!-- Apresentação -->
+        <section class="hero">
+            <div class="container">
+                <h1>Vistoria veicular do agendamento ao laudo.</h1>
+                <p>O operador agenda, o avaliador vistoria com fotos e apontamentos, e o resultado fica registrado em um só lugar.</p>
+            </div>
         </section>
 
-        <h2 class="titulo-secao">NOSSO CONTATO</h2>
-        <div class="contato">
-            <p>E-mail: contato@vistoria.com.br</p>
-            <p>Telefone: (31) 0000-0000</p>
-        </div>
+        <!-- Áreas de usuário -->
+        <section class="secao">
+            <div class="container">
+                <h2 class="secao-titulo">Áreas de usuário</h2>
 
+                <div class="areas">
+                    <a href="login.html?tipo=operador" class="area-card">
+                        <div class="area-icone">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 15h3"/></svg>
+                        </div>
+                        <div>
+                            <h3>Área do Operador</h3>
+                            <p>Agende vistorias, escolha o avaliador responsável e acompanhe a situação de cada veículo.</p>
+                            <span class="link">Acessar &rarr;</span>
+                        </div>
+                    </a>
+
+                    <a href="login.html?tipo=avaliador" class="area-card">
+                        <div class="area-icone">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        </div>
+                        <div>
+                            <h3>Área do Avaliador</h3>
+                            <p>Veja sua agenda, fotografe o veículo, aponte características e registre o resultado.</p>
+                            <span class="link">Acessar &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
-
-    <main id="operador" class="tela">
-
-        <h1 class="titulo-pagina">VEICULAR</h1>
-
-        <div class="barra">
-            <input class="busca" id="inputBusca" type="text" placeholder="Buscar por placa ou modelo">
-            <div class="botoes">
-                <button class="btn btn-incluir" id="btnIncluir">+ Incluir</button>
-                <button class="btn btn-filtrar" id="btnFiltrarOperador">Filtrar</button>
+    <!-- Nosso contato -->
+    <section class="contato">
+        <div class="container">
+            <h2 class="secao-titulo">Nosso contato</h2>
+            <div class="contato-grade">
+                <div><strong>Telefone</strong>(11) 4002-8922</div>
+                <div><strong>E-mail</strong>contato@vistoriaveicular.com.br</div>
+                <div><strong>Endereço</strong>Av. Paulista, 1000 - São Paulo/SP</div>
             </div>
         </div>
+    </section>
+    <footer class="rodape">Vistoria Informatizada &copy; 2026</footer>
 
-        <div class="tabela-area">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>PLACA</th>
-                        <th>MODELO</th>
-                        <th>SITUAÇÃO</th>
-                        <th class="col-acao"></th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyOperador">
-                    <tr>
-                        <td colspan="5">Nenhum veículo cadastrado</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="pagination" id="paginationOperador"></div>
-
-    </main>
-
-
-    <main id="avaliador" class="tela">
-
-        <h1 class="titulo-pagina">VEICULAR</h1>
-
-        <div class="barra" style="justify-content:flex-end">
-            <button class="btn btn-filtrar" id="btnFiltrarAvaliador">Filtrar</button>
-        </div>
-
-        <div class="tabela-area">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>PLACA</th>
-                        <th>MODELO</th>
-                        <th>DATA DO AGENDAMENTO</th>
-                        <th>SITUAÇÃO</th>
-                        <th class="col-acao"></th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyAvaliador">
-                    <tr>
-                        <td colspan="6">Nenhuma vistoria agendada</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="pagination" id="paginationAvaliador"></div>
-
-    </main>
-
-
-    <main id="veicular" class="tela">
-
-        <h1 class="titulo-pagina">VEICULAR</h1>
-
-        <div class="placa-modelo">
-            <span id="detPlaca">---</span>
-            <span id="detModelo">---</span>
-        </div>
-
-        <h2 class="titulo-secao">Fotos do veículo vistoriado:</h2>
-
-        <section class="fotos">
-            <div class="foto" id="fotoFrente">Frente</div>
-            <div class="foto" id="fotoTraseira">Traseira</div>
-            <div class="foto" id="fotoLatDireita">Lat. Direita</div>
-            <div class="foto" id="fotoLatEsquerda">Lat. Esquerda</div>
-            <div class="foto" id="fotoMotor">Motor</div>
-            <div class="foto" id="fotoChassi">Chassi</div>
-            <div class="foto" id="fotoTriangulo">Triângulo</div>
-            <div class="foto" id="fotoMacaco">Macaco Hidráulico</div>
-        </section>
-
-        <h2 class="titulo-secao">Características apontadas:</h2>
-
-        <ul class="caracteristicas" id="detCaracteristicas"></ul>
-
-    </main>
-
-
-    <script src="./js/ui.js"></script>
-
+    <script src="js/comum.js"></script>
+    <script>
+        // Se já estiver logado, troca os botões do topo por "Minha área"
+        let usuario = getUsuario();
+        if (usuario) {
+            let pagina = usuario.tipo == 'operador' ? 'operador.html' : 'avaliador.html';
+            document.getElementById('topoAcoes').innerHTML =
+                '<a href="' + pagina + '" class="btn btn-escuro">Minha área</a>' +
+                '<button class="btn btn-contorno" onclick="sair()">Sair</button>';
+        }
+    </script>
 </body>
 </html>
