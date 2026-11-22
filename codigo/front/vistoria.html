@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vistoria - Vistoria Veicular</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="topo">
+        <div class="container">
+            <a href="index.html" class="logo"><img src="img/logo.png" alt="Vistoria Informatizada"></a>
+            <div class="usuario-logado" id="usuarioLogado"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="titulo-pagina">
+            <span class="sobretitulo">Detalhes da vistoria</span>
+            <h1>VEICULAR</h1>
+        </div>
+
+        <!-- Placa e modelo -->
+        <div class="placa-modelo">
+            <div class="placa"><div class="faixa">BRASIL</div><div class="numero" id="placa">---</div></div>
+            <div class="modelo-caixa" id="modelo">---</div>
+        </div>
+
+        <!-- Dados do agendamento -->
+        <div class="cartao">
+            <div class="info-vistoria">
+                <div><span>Data e hora</span><strong id="dataHora">-</strong></div>
+                <div><span>Avaliador</span><strong id="avaliador">-</strong></div>
+                <div><span>Motivo</span><strong id="motivo">-</strong></div>
+                <div><span>Endereço</span><strong id="endereco">-</strong></div>
+            </div>
+        </div>
+
+        <!-- Fotos -->
+        <div class="cartao">
+            <h2 class="secao-titulo">Fotos do veículo vistoriado</h2>
+            <div class="grade-fotos" id="gradeFotos"></div>
+        </div>
+
+        <!-- Características e resultado -->
+        <div class="cartao">
+            <div class="resultado-final">
+                <div>
+                    <h2 class="secao-titulo">Características apontadas</h2>
+                    <ul class="lista-caracteristicas" id="listaCaracteristicas"></ul>
+                </div>
+                <span class="badge" id="resultado">-</span>
+            </div>
+        </div>
+
+        <a href="javascript:history.back()" class="btn btn-contorno">&larr; Voltar</a>
+    </main>
+
+    <div class="aviso" id="aviso"></div>
+
+    <script src="js/comum.js"></script>
+    <script src="js/vistoria.js"></script>
+</body>
+</html>

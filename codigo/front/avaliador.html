@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Avaliador - Vistoria Veicular</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="topo">
+        <div class="container">
+            <a href="index.html" class="logo"><img src="img/logo.png" alt="Vistoria Informatizada"></a>
+            <div class="usuario-logado" id="usuarioLogado"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="titulo-pagina">
+            <span class="sobretitulo">Área do Avaliador</span>
+            <h1>VEICULAR</h1>
+        </div>
+
+        <!-- Busca e filtro -->
+        <div class="barra-ferramentas">
+            <div class="busca">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input type="text" id="busca" placeholder="Buscar por placa ou modelo..." oninput="mostrarTabela()">
+            </div>
+            <div class="acoes">
+                <button class="btn btn-alerta" onclick="abrirModal('modalFiltro')">Filtrar</button>
+            </div>
+        </div>
+        <p class="filtro-ativo" id="filtroAtivo"></p>
+
+        <!-- Agenda do avaliador -->
+        <div class="tabela-wrap">
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th class="col-id">ID</th>
+                        <th>Placa</th>
+                        <th>Modelo</th>
+                        <th>Data do agendamento</th>
+                        <th>Situação</th>
+                        <th class="col-acao"></th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela">
+                    <tr><td colspan="6" class="tabela-vazia">Carregando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal: dados da vistoria (ao clicar na linha) -->
+    <div class="modal" id="modalDados">
+        <div class="modal-caixa">
+            <h2 class="secao-titulo">Dados da vistoria</h2>
+            <div class="grade-form tres">
+                <div class="campo"><label>Placa:</label><input type="text" id="dPlaca" readonly></div>
+                <div class="campo"><label>Modelo:</label><input type="text" id="dModelo" readonly></div>
+                <div class="campo"><label>Data e hora:</label><input type="text" id="dDataHora" readonly></div>
+                <div class="campo"><label>Motivo da vistoria:</label><input type="text" id="dMotivo" readonly></div>
+            </div>
+            <div class="campo"><label>Endereço:</label><input type="text" id="dEndereco" readonly></div>
+            <div class="modal-rodape centro">
+                <button class="btn btn-perigo" onclick="fecharModal('modalDados')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: filtro por situação ou data -->
+    <div class="modal" id="modalFiltro">
+        <div class="modal-caixa pequena">
+            <h2 class="secao-titulo">Filtrar</h2>
+
+            <div class="abas">
+                <button id="abaSituacao" class="ativo" onclick="trocarAba('situacao')">Situação</button>
+                <button id="abaData" onclick="trocarAba('data')">Data</button>
+            </div>
+
+            <!-- Aba situação -->
+            <div id="painelSituacao">
+                <div class="chips">
+                    <label class="chip"><input type="checkbox" name="filtroSituacao" value="Perdida"><span class="badge s-perdida">Perdida</span></label>
+                    <label class="chip"><input type="checkbox" name="filtroSituacao" value="Concluída"><span class="badge s-concluida">Concluída</span></label>
+                    <label class="chip"><input type="checkbox" name="filtroSituacao" value="Pendente"><span class="badge s-pendente">Pendente</span></label>
+                    <label class="chip"><input type="checkbox" name="filtroSituacao" value="Em breve"><span class="badge s-em-breve">Em breve</span></label>
+                </div>
+            </div>
+
+            <!-- Aba data -->
+            <div id="painelData" style="display:none">
+                <p class="dica" style="margin:0 0 12px">Definir período</p>
+                <div class="grade-form">
+                    <div class="campo"><label for="dataDe">De:</label><input type="date" id="dataDe"></div>
+                    <div class="campo"><label for="dataAte">Até:</label><input type="date" id="dataAte"></div>
+                </div>
+            </div>
+
+            <div class="modal-rodape centro">
+                <button class="btn btn-contorno" onclick="limparFiltro()">Limpar</button>
+                <button class="btn btn-alerta" onclick="aplicarFiltro()">Filtrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="aviso" id="aviso"></div>
+
+    <script src="js/comum.js"></script>
+    <script src="js/avaliador.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vistoriar - Vistoria Veicular</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="topo">
+        <div class="container">
+            <a href="index.html" class="logo"><img src="img/logo.png" alt="Vistoria Informatizada"></a>
+            <div class="usuario-logado" id="usuarioLogado"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="titulo-pagina">
+            <span class="sobretitulo">Vistoria em andamento</span>
+            <h1>VEICULAR</h1>
+        </div>
+
+        <!-- Placa e modelo -->
+        <div class="placa-modelo">
+            <div class="placa"><div class="faixa">BRASIL</div><div class="numero" id="placa">---</div></div>
+            <div class="modelo-caixa" id="modelo">---</div>
+        </div>
+
+        <!-- Fotos: clique em uma posição para adicionar a foto -->
+        <div class="cartao">
+            <h2 class="secao-titulo">Fotos do veículo vistoriado</h2>
+            <div class="grade-fotos" id="gradeFotos"></div>
+        </div>
+
+        <!-- Características apontadas -->
+        <div class="cartao">
+            <h2 class="secao-titulo">Características apontadas</h2>
+            <ul class="lista-caracteristicas" id="listaCaracteristicas"></ul>
+            <div class="linha-acoes">
+                <button class="btn btn-sucesso" onclick="abrirCaracteristica()">+ Adicionar característica</button>
+                <button class="btn btn-perigo" onclick="abrirModal('modalResultado')">Finalizar vistoria</button>
+            </div>
+        </div>
+
+        <a href="avaliador.html" class="btn btn-contorno">&larr; Voltar para a agenda</a>
+    </main>
+
+    <!-- Modal: adicionar foto -->
+    <div class="modal" id="modalFoto">
+        <div class="modal-caixa pequena">
+            <h2 class="secao-titulo" id="tituloFoto">Foto</h2>
+            <label class="caixa-foto" for="arquivoFoto">
+                <img id="previaFoto" style="display:none" alt="Prévia da foto">
+                <div class="instrucao" id="instrucaoFoto">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <div>Adicionar foto</div>
+                </div>
+            </label>
+            <!-- capture="environment" abre a câmera traseira no celular -->
+            <input type="file" id="arquivoFoto" accept="image/*" capture="environment" style="display:none" onchange="carregarPrevia()">
+            <div class="modal-rodape centro">
+                <button class="btn btn-perigo" onclick="fecharModal('modalFoto')">Fechar</button>
+                <button class="btn btn-primario" id="btnSalvarFoto" onclick="salvarFoto()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: nova característica -->
+    <div class="modal" id="modalCaracteristica">
+        <div class="modal-caixa pequena">
+            <h2 class="secao-titulo">Característica apontada</h2>
+            <form id="formCaracteristica">
+                <div class="campo">
+                    <label for="descricao">Descrição:</label>
+                    <input type="text" id="descricao" placeholder="Ex.: Arranhão na lateral direita" required>
+                </div>
+                <div class="modal-rodape centro">
+                    <button type="button" class="btn btn-contorno" onclick="fecharModal('modalCaracteristica')">Fechar</button>
+                    <button type="submit" class="btn btn-primario">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: resultado final -->
+    <div class="modal" id="modalResultado">
+        <div class="modal-caixa pequena">
+            <h2 class="secao-titulo">Resultado</h2>
+            <div class="chips">
+                <label class="chip"><input type="radio" name="resultado" value="Reprovado"><span class="badge s-reprovado">Reprovado</span></label>
+                <label class="chip"><input type="radio" name="resultado" value="Com ressalvas"><span class="badge s-com-ressalvas">Com ressalvas</span></label>
+                <label class="chip"><input type="radio" name="resultado" value="Aprovado"><span class="badge s-aprovado">Aprovado</span></label>
+            </div>
+            <div class="modal-rodape centro">
+                <button class="btn btn-contorno" onclick="fecharModal('modalResultado')">Fechar</button>
+                <button class="btn btn-primario" onclick="finalizar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: confirmação -->
+    <div class="modal" id="modalConfirmar">
+        <div class="modal-caixa pequena">
+            <div class="confirmar-icone">!</div>
+            <p class="confirmar-texto" id="textoConfirmar">Tem certeza de que quer excluir este item?</p>
+            <div class="modal-rodape centro">
+                <button class="btn btn-contorno" onclick="fecharModal('modalConfirmar')">Não</button>
+                <button class="btn btn-perigo" id="btnConfirmar">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="aviso" id="aviso"></div>
+
+    <script src="js/comum.js"></script>
+    <script src="js/vistoriar.js"></script>
+</body>
+</html>

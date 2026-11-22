@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Operador - Vistoria Veicular</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="topo">
+        <div class="container">
+            <a href="index.html" class="logo"><img src="img/logo.png" alt="Vistoria Informatizada"></a>
+            <div class="usuario-logado" id="usuarioLogado"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="titulo-pagina">
+            <span class="sobretitulo">Área do Operador</span>
+            <h1>VEICULAR</h1>
+        </div>
+
+        <!-- Busca e botões -->
+        <div class="barra-ferramentas">
+            <div class="busca">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input type="text" id="busca" placeholder="Buscar por placa ou modelo..." oninput="mostrarTabela()">
+            </div>
+            <div class="acoes">
+                <button class="btn btn-sucesso" onclick="abrirInclusao()">+ Incluir</button>
+                <button class="btn btn-alerta" onclick="abrirModal('modalFiltro')">Filtrar</button>
+            </div>
+        </div>
+        <p class="filtro-ativo" id="filtroAtivo"></p>
+
+        <!-- Tabela de vistorias -->
+        <div class="tabela-wrap">
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th class="col-id">ID</th>
+                        <th>Placa</th>
+                        <th>Modelo</th>
+                        <th>Data da vistoria</th>
+                        <th>Situação</th>
+                        <th class="col-acao"></th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela">
+                    <tr><td colspan="6" class="tabela-vazia">Carregando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Menu "Opções" de cada linha -->
+    <div class="menu-opcoes" id="menuOpcoes">
+        <button id="opVer">Ver vistoria</button>
+        <button id="opEditar">Editar vistoria</button>
+        <button id="opCancelar">Cancelar vistoria</button>
+        <button id="opExcluir" class="perigo">Excluir vistoria</button>
+    </div>
+
+    <!-- Modal: inclusão / edição de vistoria -->
+    <div class="modal" id="modalVistoria">
+        <div class="modal-caixa">
+            <h2 class="secao-titulo" id="tituloFormulario">Inclusão de vistorias</h2>
+            <div class="mensagem-erro" id="erroVistoria"></div>
+            <form id="formVistoria">
+                <input type="hidden" id="vistoriaId">
+                <div class="grade-form">
+                    <div class="campo">
+                        <label for="placa">Placa:</label>
+                        <input type="text" id="placa" placeholder="ABC-1D23" maxlength="8" required>
+                    </div>
+                    <div class="campo">
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" id="modelo" placeholder="FIAT/TORO FREEDOM 2.0" required>
+                    </div>
+                    <div class="campo">
+                        <label for="dataHora">Data e hora:</label>
+                        <input type="datetime-local" id="dataHora" required>
+                    </div>
+                    <div class="campo">
+                        <label for="avaliador">Avaliador responsável:</label>
+                        <select id="avaliador" required></select>
+                    </div>
+                    <div class="campo">
+                        <label for="motivo">Motivo da vistoria:</label>
+                        <select id="motivo" required>
+                            <option value="">Selecione...</option>
+                            <option>Transferência</option>
+                            <option>Seguro</option>
+                            <option>Sinistro</option>
+                            <option>Regularização</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+                    <div class="campo inteiro">
+                        <label for="endereco">Endereço:</label>
+                        <input type="text" id="endereco" placeholder="Rua, número - Cidade/UF" required>
+                    </div>
+                </div>
+                <div class="modal-rodape">
+                    <button type="button" class="btn btn-contorno" onclick="fecharModal('modalVistoria')">Fechar</button>
+                    <button type="submit" class="btn btn-sucesso">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: filtro por situação -->
+    <div class="modal" id="modalFiltro">
+        <div class="modal-caixa pequena">
+            <h2 class="secao-titulo">Filtrar</h2>
+            <div class="chips">
+                <label class="chip"><input type="checkbox" name="filtroSituacao" value="Reprovado"><span class="badge s-reprovado">Reprovado</span></label>
+                <label class="chip"><input type="checkbox" name="filtroSituacao" value="Pendente"><span class="badge s-pendente">Pendente</span></label>
+                <label class="chip"><input type="checkbox" name="filtroSituacao" value="Com ressalvas"><span class="badge s-com-ressalvas">Com ressalvas</span></label>
+                <label class="chip"><input type="checkbox" name="filtroSituacao" value="Aprovado"><span class="badge s-aprovado">Aprovado</span></label>
+                <label class="chip"><input type="checkbox" name="filtroSituacao" value="Cancelado"><span class="badge s-cancelado">Cancelado</span></label>
+            </div>
+            <p class="dica">Marque uma ou mais situações. Sem nenhuma marcada, mostra todas.</p>
+            <div class="modal-rodape centro">
+                <button class="btn btn-contorno" onclick="limparFiltro()">Limpar</button>
+                <button class="btn btn-alerta" onclick="aplicarFiltro()">Filtrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: confirmação -->
+    <div class="modal" id="modalConfirmar">
+        <div class="modal-caixa pequena">
+            <div class="confirmar-icone">!</div>
+            <p class="confirmar-texto" id="textoConfirmar">Tem certeza de que quer excluir este item?</p>
+            <div class="modal-rodape centro">
+                <button class="btn btn-contorno" onclick="fecharModal('modalConfirmar')">Não</button>
+                <button class="btn btn-perigo" id="btnConfirmar">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="aviso" id="aviso"></div>
+
+    <script src="js/comum.js"></script>
+    <script src="js/operador.js"></script>
+</body>
+</html>
