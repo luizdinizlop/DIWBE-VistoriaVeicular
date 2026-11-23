@@ -15,7 +15,7 @@ app.use(express.json());
 
 
 
-const PetDB = require('./PetDB');
+const UsuarioDB = require('./UsuarioDB');
 
 
 
@@ -23,74 +23,52 @@ const PetDB = require('./PetDB');
 // Rota principal
 app.get('/', function (req, res) {
 
-    res.send('API dos Pets');
+    res.send('API dos usuarios');
 
 });
 
-// GET /pets
-app.get('/pets', function (req, res) {
+app.get('/avaliadores', function (req, res) {
 
-    PetDB.getPets(function (pets) {
+    UsuarioDB.getAvaliadores(function (avaliadores) {
 
-        res.json(pets);
-
-    });
-
-});
-
-// GET /pets/:id
-app.get('/pets/:id', function (req, res) {
-
-    const id = parseInt(req.params.id);
-
-    if (isNaN(id)) {
-
-        return res.status(400).json({
-            erro: 'ID inválido'
-        });
-
-    }
-
-    PetDB.getPetById(id, function (pet) {
-
-        if (!pet) {
-
-            return res.status(404).json({
-                erro: 'Pet não encontrado'
-            });
-
-        }
-
-        res.json(pet);
-
-    });
-
-});
-
-// GET /pets/tipo/:tipo
-app.get('/pets/tipo/:tipo', function (req, res) {
-
-    const tipo = req.params.tipo;
-
-    PetDB.getPetsByTipo(tipo, function (pets) {
-
-        res.json(pets);
+        res.json(avaliadores);
 
     });
 
 });
 
 // POST /pets
-app.post('/pets', function (req, res) {
+app.post('/usuarios', function (req, res) {
 
-    const pet = req.body;
+    const usuario = {
+        nome: req.body.nome,
+        email: req.body.email,
+        senha: req.body.senha,
+        tipo: req.body.tipo
+    };
 
-    PetDB.save(pet, function (petSalvo) {
+    if (!usuario.nome || !usuario.email || !usuario.senha || usuario.tipo){
+        return res.status(400).json({erro: 'Preencher todos os campos.'});
+    }
 
-        res.status(201).json(petSalvo);
+    UsuarioDB.getUsuarioByEmail(usuario.email, function (existente) {
+        if (existente){
+            return res.status(400).json({erro: 'Este email já está cadastrado.'});
+        }
 
+        UsuarioDB.save(usuario, function (usuarioSalvo){
+            res.status(201).json(usuarioSalvo);
+        });
     });
+});
 
+app.post('/login', function(req, res){
+    UsuarioDB.login(req.body.email, req.body.senha, req.body.tipo, function(usuario) {
+        if (!usuario){
+            return res.status(401).json({erro: 'Email ou senha inválidos;'});
+        }
+        res.json(usuario);
+    });
 });
 
 // PUT /pets
