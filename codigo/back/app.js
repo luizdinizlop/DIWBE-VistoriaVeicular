@@ -16,8 +16,8 @@ app.use(express.json());
 
 
 const UsuarioDB = require('./UsuarioDB');
-
-
+const VistoriaDB = require('./VistoriaDB');
+const { resourceLimits } = require('node:worker_threads');
 
 
 // Rota principal
@@ -124,6 +124,42 @@ app.delete('/pets/:id', function (req, res) {
 
     });
 
+});
+
+
+//rota das visorias
+
+app.get('/vistorias', function (req, res){
+    VistoriaDB.getVistorias(function (vistorias){
+        res.json(vistorias);
+    });
+});
+
+app.get('/vistorias/avaliador/:id', function (req, res){
+    const id = parseInt(req.params.id);
+
+    if (isNaN(id)){
+        return res.status(400).json({erro: 'ID inválido'});
+    }
+
+    VistoriaDB.getVistoriaByAvaliador(id, function (vistorias){
+        res.json(vistorias);
+    });
+});
+
+app.get('/vistorias/:id', function (req, res){
+    const id = parseInt(req.params.id);
+
+    if (isNaN(id)) {
+        return res.status(400).json({erro: 'ID inválido'});
+    }
+
+    VistoriaDB.getVistoriaByID(id, function(vistoria){
+        if (!vistoria){
+            return res.status(404).json({erro: 'Vistoria não encontrada'});
+        }
+        res.json(vistoria);
+    });
 });
 
 // Inicializa servidor
