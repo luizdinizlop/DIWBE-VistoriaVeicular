@@ -7,7 +7,7 @@ class Conexao {
         var connection = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: 'Fran880537@',
+            password: 'root',
             database: 'vistoria',
             dateStrings: true // devolve as datas como texto
         });
