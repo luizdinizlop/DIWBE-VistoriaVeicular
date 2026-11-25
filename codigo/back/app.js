@@ -18,6 +18,7 @@ app.use(express.json());
 const UsuarioDB = require('./UsuarioDB');
 const VistoriaDB = require('./VistoriaDB');
 const FotoDB = require('./FotoDB');
+const CaracteristicaDB = require('./CaracteristicaDB')
 
 // não fui eu quem botou isso aqui
 const { resourceLimits } = require('node:worker_threads');
@@ -167,6 +168,35 @@ app.delete('/fotos/:id', function (req, res){
 
     FotoDB.deleteById(id, function (affectedRows){
         res,json({msg: 'Foto excluida'});
+    });
+});
+
+// Rota das caracteristicas
+
+app.get('/vistorias/:id/caracteristicas', function (req, res){
+    const id = parseInt(req.params.id);
+
+    CaracteristicaDB.getCaracteristicaByVistoria(id, function(lista){
+        res.json(lista);
+    });
+});
+
+app.post('/caracteristicas', function (req, res){
+    const caracteristica = {
+        vistoria_id: req.body.vistoria_id,
+        descricao: req.body.descricao
+    };
+
+    CaracteristicaDB.save(caracteristica, function (salva){
+        res.json(salva);
+    });
+});
+
+app.delete('/caracteristicas/:id', function (req, res){
+    const id = parseInt(req.parans.id);
+
+    CaracteristicaDB.deleteById(id, function (affectedRows){
+        res.json({msg: 'Caracteristica excluida'});
     });
 });
 
