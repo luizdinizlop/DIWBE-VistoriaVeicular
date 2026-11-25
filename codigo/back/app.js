@@ -162,6 +162,37 @@ app.get('/vistorias/:id', function (req, res){
     });
 });
 
+app.post('/vistorias', function (req, res){
+    const vistoria = req.body;
+    vistoria.situacao = 'Pendente'; //pra toda vistoria já aparecer pendete
+
+    VistoriaDB.save(vistoria, function(vistoriaSalva){
+        res.json(vistoriaSalva);
+    });
+});
+
+app.put('/vistorias', function (req, res){
+    const vistoria = req.body;
+
+    VistoriaDB.update(vistoria, function (vistoriaAtualizada){
+        res.json({msg: 'Vistoria atualizada com sucesso.'});
+    });
+});
+
+app.delete('/vistorias/:id', function (req, res){
+    const id = parseInt(req.params.id);
+
+    if (isNaN(id)){
+        return res.status(400).json({erro: 'ID inválida'});
+    }
+
+    console.log('Deletar vistoria ' + id);
+
+    VistoriaDB.deleteById(id, function (affectedRows){
+        res.json({msg: 'Vistoria excluida.'});
+    });
+});
+
 // Inicializa servidor
 const server = app.listen(3000, function () {
 
