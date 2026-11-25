@@ -17,6 +17,9 @@ app.use(express.json());
 
 const UsuarioDB = require('./UsuarioDB');
 const VistoriaDB = require('./VistoriaDB');
+const FotoDB = require('./FotoDB');
+
+// não fui eu quem botou isso aqui
 const { resourceLimits } = require('node:worker_threads');
 
 
@@ -70,62 +73,6 @@ app.post('/login', function(req, res){
         res.json(usuario);
     });
 });
-
-// PUT /pets
-app.put('/pets', function (req, res) {
-
-    const pet = req.body;
-
-    if (!pet.id) {
-
-        return res.status(400).json({
-            erro: 'Informe o ID do pet'
-        });
-
-    }
-
-    PetDB.update(pet, function (petAtualizado) {
-
-        res.json({
-            msg: 'Pet atualizado com sucesso',
-            pet: petAtualizado
-        });
-
-    });
-
-});
-
-// DELETE /pets/:id
-app.delete('/pets/:id', function (req, res) {
-
-    const id = parseInt(req.params.id);
-
-    if (isNaN(id)) {
-
-        return res.status(400).json({
-            erro: 'ID inválido'
-        });
-
-    }
-
-    PetDB.deleteById(id, function (affectedRows) {
-
-        if (affectedRows === 0) {
-
-            return res.status(404).json({
-                erro: 'Pet não encontrado'
-            });
-
-        }
-
-        res.json({
-            msg: 'Pet removido com sucesso'
-        });
-
-    });
-
-});
-
 
 //rota das visorias
 
@@ -190,6 +137,36 @@ app.delete('/vistorias/:id', function (req, res){
 
     VistoriaDB.deleteById(id, function (affectedRows){
         res.json({msg: 'Vistoria excluida.'});
+    });
+});
+
+// Rota das fotos
+
+app.get('/vistorias/:id/fotos', function (req, res){
+    const id = parseInt(req.params.id);
+
+    FotoDB.getFotosByVistoria(id, function (fotos){
+        res.json(fotos);
+    });
+});
+
+app.post('/fotos', function (req, res){
+    const foto = {
+        vistoria_id: req.body.vistoria_id,
+        posicao: req.body.posicao,
+        imagem: req.body.imagem
+    };
+
+    FotoDB.save(foto, function (fotoSalva){
+        res.json({id: fotoSalva.id, msg: 'Foto salva'});
+    });
+});
+
+app.delete('/fotos/:id', function (req, res){
+    const id = parseInt(req.params.id);
+
+    FotoDB.deleteById(id, function (affectedRows){
+        res,json({msg: 'Foto excluida'});
     });
 });
 
