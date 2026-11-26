@@ -1,7 +1,7 @@
-// =========================================================
-// VISTORIAR (avaliador)
-// Adiciona fotos, aponta características e finaliza com o resultado
-// =========================================================
+
+// vistoriar - avaliador
+// adiciona as informacoes da vistoria
+
 
 const usuario = exigirLogin('avaliador');
 const vistoriaId = parseInt(getParametro('id'));
@@ -11,11 +11,11 @@ let posicaoAtual = '';   // posição clicada (Frente, Traseira...)
 let imagemNova = null;   // foto escolhida no modal (em base64)
 
 
-// ---------- Dados da vistoria ----------
+// dados da vistoria
 
 function carregarVistoria() {
     api('/vistorias/' + vistoriaId).then(function (v) {
-        // Vistoria já finalizada ou cancelada: só pode ver
+        // vistoria ja finalizada ou cancelada
         if (v.situacao != 'Pendente') {
             window.location.href = 'vistoria.html?id=' + vistoriaId;
             return;
@@ -28,7 +28,7 @@ function carregarVistoria() {
 }
 
 
-// ---------- Fotos ----------
+// fotos
 
 function carregarFotos() {
     api('/vistorias/' + vistoriaId + '/fotos').then(function (lista) {
@@ -41,7 +41,7 @@ function buscarFoto(posicao) {
     return fotos.find(function (f) { return f.posicao == posicao; });
 }
 
-// Monta os 8 quadros. Clicando em um deles abre o modal de foto.
+// monta os 8 quadros da foto
 function montarGrade() {
     let html = '';
     for (let i = 0; i < POSICOES.length; i++) {
@@ -67,7 +67,7 @@ function abrirFoto(posicao) {
     document.getElementById('tituloFoto').innerText = posicao;
     document.getElementById('arquivoFoto').value = '';
 
-    // Se já tem foto nessa posição, mostra ela
+    // se ja tem foto nessa posicao, mostra ela
     let foto = buscarFoto(posicao);
     mostrarPrevia(foto ? foto.imagem : null);
     abrirModal('modalFoto');
@@ -84,8 +84,8 @@ function mostrarPrevia(imagem) {
     }
 }
 
-// Lê a foto escolhida e diminui o tamanho dela antes de enviar
-// (fotos de celular são grandes; 1024px já é suficiente)
+// le a foto escolhida e ajusta o tamanho dela antes de enviar
+// 1024px ja sao suficientes
 function carregarPrevia() {
     let arquivo = document.getElementById('arquivoFoto').files[0];
     if (!arquivo) return;
@@ -124,7 +124,7 @@ function salvarFoto() {
 }
 
 
-// ---------- Características ----------
+// caracteristicas
 
 function carregarCaracteristicas() {
     api('/vistorias/' + vistoriaId + '/caracteristicas').then(function (lista) {
@@ -169,7 +169,7 @@ function excluirCaracteristica(id) {
 }
 
 
-// ---------- Finalizar ----------
+// finalizar
 
 function finalizar() {
     let marcado = document.querySelector('input[name="resultado"]:checked');
@@ -186,7 +186,7 @@ function finalizar() {
         });
     };
 
-    // Avisa se ainda faltam fotos
+    // avisa se ainda faltam fotos
     let faltam = POSICOES.length - fotos.length;
     fecharModal('modalResultado');
     if (faltam > 0) {
@@ -197,7 +197,7 @@ function finalizar() {
 }
 
 
-// ---------- Início ----------
+// inicio
 if (usuario) {
     carregarVistoria();
     carregarFotos();

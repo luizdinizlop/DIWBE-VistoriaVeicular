@@ -1,8 +1,8 @@
-// =========================================================
-// ÁREA DO AVALIADOR
-// Agenda de vistorias do avaliador logado, com filtro
-// por situação e por período
-// =========================================================
+
+// area do avaliador
+// agenda as vistorias do avaliador que esta logado
+
+
 
 const usuario = exigirLogin('avaliador');
 
@@ -12,7 +12,7 @@ let filtroDe = '';
 let filtroAte = '';
 
 
-// ---------- Listagem ----------
+// listagem
 
 function carregarVistorias() {
     api('/vistorias/avaliador/' + usuario.id).then(function (lista) {
@@ -32,18 +32,18 @@ function mostrarTabela() {
         let situacao = situacaoAgendamento(v);
         let dia = v.data_hora.substring(0, 10);
 
-        // Busca por placa ou modelo
+        // busca por placa ou modelo
         let texto = (v.placa + ' ' + v.modelo).toUpperCase();
         if (busca && texto.indexOf(busca) == -1) continue;
 
-        // Filtro por situação
+        // filtro por situacao
         if (filtroSituacoes.length > 0 && filtroSituacoes.indexOf(situacao) == -1) continue;
 
-        // Filtro por período
+        // filtro por periodo
         if (filtroDe && dia < filtroDe) continue;
         if (filtroAte && dia > filtroAte) continue;
 
-        // Concluída: só visualiza. Demais: pode vistoriar.
+        // concluida
         let botao;
         if (situacao == 'Concluída') {
             botao = '<a class="btn btn-contorno btn-pequeno" href="vistoria.html?id=' + v.id + '" onclick="event.stopPropagation()">Ver</a>';
@@ -68,7 +68,7 @@ function mostrarTabela() {
 }
 
 
-// ---------- Dados da vistoria (clique na linha) ----------
+// dados da vistoria
 
 function verDados(id) {
     let v = vistorias.find(function (item) { return item.id == id; });
@@ -81,9 +81,9 @@ function verDados(id) {
 }
 
 
-// ---------- Filtro ----------
+// filtro
 
-// Alterna entre as abas "Situação" e "Data"
+// alterna entre a aba situacao e data
 function trocarAba(aba) {
     document.getElementById('abaSituacao').classList.toggle('ativo', aba == 'situacao');
     document.getElementById('abaData').classList.toggle('ativo', aba == 'data');
@@ -100,7 +100,7 @@ function aplicarFiltro() {
     filtroDe = document.getElementById('dataDe').value;
     filtroAte = document.getElementById('dataAte').value;
 
-    // Mostra o que está filtrado acima da tabela
+    // mostra oque esta filtrado acima da tabela
     let partes = [];
     if (filtroSituacoes.length > 0) partes.push(filtroSituacoes.join(', '));
     if (filtroDe) partes.push('de ' + formatarData(filtroDe));
@@ -128,7 +128,7 @@ function limparFiltro() {
 }
 
 
-// ---------- Início ----------
+// inicio
 if (usuario) {
     carregarVistorias();
 }
