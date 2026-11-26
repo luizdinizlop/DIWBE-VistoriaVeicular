@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 
 app.use(cors());
 // Configura para receber JSON
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static ('public'));
+app.use(express.static(path.join(__dirname, '..', 'front')));
 
 
 
@@ -18,13 +19,6 @@ const CaracteristicaDB = require('./CaracteristicaDB')
 // não fui eu quem botou isso aqui
 const { resourceLimits } = require('node:worker_threads');
 
-
-// Rota principal
-app.get('/', function (req, res) {
-
-    res.send('API dos usuarios');
-
-});
 
 app.get('/avaliadores', function (req, res) {
 
@@ -46,7 +40,7 @@ app.post('/usuarios', function (req, res) {
         tipo: req.body.tipo
     };
 
-    if (!usuario.nome || !usuario.email || !usuario.senha || usuario.tipo){
+    if (!usuario.nome || !usuario.email || !usuario.senha || !usuario.tipo){
         return res.status(400).json({erro: 'Preencher todos os campos.'});
     }
 
@@ -85,7 +79,7 @@ app.get('/vistorias/avaliador/:id', function (req, res){
         return res.status(400).json({erro: 'ID inválido'});
     }
 
-    VistoriaDB.getVistoriaByAvaliador(id, function (vistorias){
+    VistoriaDB.getVistoriasByAvaliador(id, function (vistorias){
         res.json(vistorias);
     });
 });
@@ -97,7 +91,7 @@ app.get('/vistorias/:id', function (req, res){
         return res.status(400).json({erro: 'ID inválido'});
     }
 
-    VistoriaDB.getVistoriaByID(id, function(vistoria){
+    VistoriaDB.getVistoriaById(id, function(vistoria){
         if (!vistoria){
             return res.status(404).json({erro: 'Vistoria não encontrada'});
         }
@@ -162,7 +156,7 @@ app.delete('/fotos/:id', function (req, res){
     const id = parseInt(req.params.id);
 
     FotoDB.deleteById(id, function (affectedRows){
-        res,json({msg: 'Foto excluida'});
+        res.json({msg: 'Foto excluida'});
     });
 });
 
@@ -171,7 +165,7 @@ app.delete('/fotos/:id', function (req, res){
 app.get('/vistorias/:id/caracteristicas', function (req, res){
     const id = parseInt(req.params.id);
 
-    CaracteristicaDB.getCaracteristicaByVistoria(id, function(lista){
+    CaracteristicaDB.getCaracteristicasByVistoria(id, function(lista){
         res.json(lista);
     });
 });
@@ -188,7 +182,7 @@ app.post('/caracteristicas', function (req, res){
 });
 
 app.delete('/caracteristicas/:id', function (req, res){
-    const id = parseInt(req.parans.id);
+    const id = parseInt(req.params.id);
 
     CaracteristicaDB.deleteById(id, function (affectedRows){
         res.json({msg: 'Caracteristica excluida'});
@@ -196,8 +190,7 @@ app.delete('/caracteristicas/:id', function (req, res){
 });
 
 // Inicializa servidor
-const server = app.listen(3000, function () {
-
-    console.log('Servidor iniciado em http://localhost:3000');
-
+const server = app.listen(3000, function(){
+    const port = server.address().port;
+    console.log(`Servidor iniciado em http://localhost:${port}`);
 });

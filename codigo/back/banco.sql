@@ -2,7 +2,7 @@
 create database if not exists vistoria;
 use vistoria;
 
---Usuários(operador ou avaliador)
+-- Usuários(operador ou avaliador)
 create table usuario
 (
    id bigint not null auto_increment,
@@ -28,7 +28,7 @@ create table vistoria
    foreign key (avaliador_id) references usuario(id)
 );
 
-Fotos 
+-- Fotos 
 create table foto
 (
    id bigint not null auto_increment,
