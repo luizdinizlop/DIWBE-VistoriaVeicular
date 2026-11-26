@@ -18,10 +18,10 @@ class CaracteristicaDB {
     //inserir
     static save(caracteristica, callback) {
         let connection = Conexao.connect();
-        let sql = "insert into caracteristica set ?";
+        let sql = "insert into caracteristica set ?"; // "set ?" monta o inserir usando chaves do objeto
         let query = connection.query(sql, caracteristica, function (error, results, fields) {
             if (error) throw error;
-            caracteristica.id = results.insertId;
+            caracteristica.id = results.insertId; // salva o id gerado pelo banco dentro do objeto
             callback(caracteristica);
         });
         console.log(query.sql);
@@ -34,7 +34,7 @@ class CaracteristicaDB {
         let sql = "delete from caracteristica where id = ?";
         let query = connection.query(sql, id, function (error, results, fields) {
             if (error) throw error;
-            callback(results.affectedRows);
+            callback(results.affectedRows); // mostra quantas linhas foram afetadas
         });
         console.log(query.sql);
         connection.end();

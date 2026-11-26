@@ -44,7 +44,7 @@ class VistoriaDB {
     // inserir nova vistoria
     static save(vistoria, callback) {
         let connection = Conexao.connect();
-        let sql = "insert into vistoria set ?";
+        let sql = "insert into vistoria set ?"; // mapeia o objeto para colunas e valores
         let query = connection.query(sql, vistoria, function (error, results, fields) {
             if (error) throw error;
             vistoria.id = results.insertId;

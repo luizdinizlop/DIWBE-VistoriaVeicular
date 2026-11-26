@@ -4,9 +4,9 @@ const crypto = require('crypto');
 // acessa tabela usuario
 class UsuarioDB {
 
-    // Transforma a senha em um código (hash) para não salvar a senha pura no banco ** foco aqui
+   
     static criptografar(senha) {
-        return crypto.createHash('sha256').update(String(senha)).digest('hex');
+        return crypto.createHash('sha256').update(String(senha)).digest('hex'); // evita salvar a senha real no banco
     }
 
     // buscar usuario pelo email
@@ -15,13 +15,13 @@ class UsuarioDB {
         let sql = "select id, nome, email, tipo from usuario where email = ?";
         let query = connection.query(sql, email, function (error, results, fields) {
             if (error) throw error;
-            callback(results[0]);
+            callback(results[0]); //traz somente o ususario encontrado
         });
         console.log(query.sql);
         connection.end();
     }
 
-    // Lista todos os avaliadores (usado no formulário do operador) ** atenção aqui
+    // lista avaliadores
     static getAvaliadores(callback) {
         let connection = Conexao.connect();
         let sql = "select id, nome from usuario where tipo = 'avaliador' order by nome";
@@ -33,13 +33,13 @@ class UsuarioDB {
         connection.end();
     }
 
-    // Faz o login: confere e-mail, senha e tipo de usuário ** foco aqui
+    // faz login - conferindo nome, email e tipo de usuario
     static login(email, senha, tipo, callback) {
         let connection = Conexao.connect();
         let sql = "select id, nome, email, tipo from usuario where email = ? and senha = ? and tipo = ?";
         let query = connection.query(sql, [email, UsuarioDB.criptografar(senha), tipo], function (error, results, fields) {
             if (error) throw error;
-            callback(results[0]); // undefined se não encontrar
+            callback(results[0]); 
         });
         console.log(query.sql);
         connection.end();
@@ -48,12 +48,12 @@ class UsuarioDB {
     // inserir novo usuario
     static save(usuario, callback) {
         let connection = Conexao.connect();
-        usuario.senha = UsuarioDB.criptografar(usuario.senha);
+        usuario.senha = UsuarioDB.criptografar(usuario.senha); // passa a senha criptografada
         let sql = "insert into usuario set ?";
         let query = connection.query(sql, usuario, function (error, results, fields) {
             if (error) throw error;
             usuario.id = results.insertId;
-            delete usuario.senha; // não devolve a senha
+            delete usuario.senha; // remove a senha antes de mostrar
             callback(usuario);
         });
         console.log(query.sql);
